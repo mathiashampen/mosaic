@@ -1,18 +1,22 @@
-apply plugin: 'dev.nokee.jni-library'
-apply plugin: 'java' // jni-library is incompatible with the java-library plugin
 apply plugin: 'com.vanniktech.maven.publish'
 
 archivesBaseName = 'mosaic-yoga'
 
-library {
-	dependencies {
-		nativeImplementation project(':yoga:jni')
-	}
+if (properties["mosaicMultiplatformBuild"] != "true") {
+	apply plugin: 'java' // jni-library is incompatible with the java-library plugin
+	apply plugin: 'dev.nokee.jni-library'
 
-	variants.configureEach {
-		// TODO something for os and arch.
-		resourcePath = "/"
+	library {
+		dependencies {
+			nativeImplementation project(':yoga:jni')
+		}
+
+		variants.configureEach {
+			resourcePath = "/"
+		}
 	}
+} else {
+	apply plugin: 'java-library'
 }
 
 sourceSets {

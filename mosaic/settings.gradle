@@ -8,5 +8,8 @@ include ':compose:compiler-hosted'
 include ':compose:runtime'
 
 include ':yoga'
-include ':yoga:core'
-include ':yoga:jni'
+
+if (properties["mosaicMultiplatformBuild"] != "true") {
+	include ':yoga:core'
+	include ':yoga:jni'
+}
